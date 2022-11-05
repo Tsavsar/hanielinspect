@@ -54,7 +54,7 @@ function storeData() {
 
 const localtodos = ref(JSON.parse(localStorage.getItem("storetodos")));
 
-if (!localtodos.values) {
+if (!localtodos.value) {
   localStorage.setItem("storetodos", stringtodos);
 }
 //what you need to do is to add the new todos to your local todos
@@ -80,7 +80,7 @@ function addTodo() {
 }
 function removeTodo(todoid) {
   console.log("bruh");
-  todos.value = todos.value.filter(t => t.id !== todoid);
+  localtodos.value = localtodos.value.filter(t => t.id !== todoid);
 }
 
 function editTodo(todoid) {
@@ -99,7 +99,7 @@ function editTodo(todoid) {
   <div class="heads">
     <div class="taskshead">
       You have
-      <span>{{ todos.length }}</span> tasks
+      <span>{{ localtodos.length }}</span> tasks
     </div>
     <div class="h done" @click="hideCompleted = !hideCompleted">Filter</div>
   </div>
@@ -120,7 +120,7 @@ function editTodo(todoid) {
         </form>
       </div>
     </Transition>
-    <div v-if="todos.length == 0">
+    <div v-if="localtodos.length == 0">
       <div class="place">
         <svg
           class="animated"
@@ -1138,7 +1138,7 @@ function editTodo(todoid) {
       </div>
     </div>
     <ul>
-      <li v-for="todo in todos">
+      <li v-for="todo in localtodos.values">
         <!-- <input type="checkbox" v-model="todo.done" /> -->
 
         <div class="col">
