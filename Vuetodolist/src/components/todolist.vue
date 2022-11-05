@@ -54,7 +54,7 @@ function storeData() {
 
 const localtodos = ref(JSON.parse(localStorage.getItem("storetodos")));
 
-if (!localtodos) {
+if (!localtodos.values) {
   localStorage.setItem("storetodos", stringtodos);
 }
 //what you need to do is to add the new todos to your local todos
@@ -63,7 +63,7 @@ if (!localtodos) {
 // const userData = JSON.parse(localStorage.getItem("userData"));
 
 function addTodo() {
-  localtodos?.value.push({
+  todos.value.push({
     id: ++id,
     text: newTodo.value,
     desc: newTodo2.value,
@@ -76,11 +76,11 @@ function addTodo() {
 
   open.value = !open.value;
 
-  localStorage.setItem("storetodos", JSON.stringify(localtodos));
+  localStorage.setItem("storetodos", JSON.stringify(todos));
 }
 function removeTodo(todoid) {
   console.log("bruh");
-  localtodos.value = localtodos.value.filter(t => t.id !== todoid);
+  todos.value = todos.value.filter(t => t.id !== todoid);
 }
 
 function editTodo(todoid) {
@@ -99,7 +99,7 @@ function editTodo(todoid) {
   <div class="heads">
     <div class="taskshead">
       You have
-      <span>{{ localtodos?.value.length }}</span> tasks
+      <span>{{ todos.length }}</span> tasks
     </div>
     <div class="h done" @click="hideCompleted = !hideCompleted">Filter</div>
   </div>
@@ -120,7 +120,7 @@ function editTodo(todoid) {
         </form>
       </div>
     </Transition>
-    <div v-if="localtodos?.value.length == 0">
+    <div v-if="todos.length == 0">
       <div class="place">
         <svg
           class="animated"
@@ -1138,7 +1138,7 @@ function editTodo(todoid) {
       </div>
     </div>
     <ul>
-      <li v-for="todo in localtodos" :key="localtodos.id">
+      <li v-for="todo in todos">
         <!-- <input type="checkbox" v-model="todo.done" /> -->
 
         <div class="col">
